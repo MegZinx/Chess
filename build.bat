@@ -1,0 +1,1 @@
+g++ src/main.cpp -I external/SFML/include -L external/SFML/lib -lsfml-graphics -lsfml-window -lsfml-system -o build/chess.exe
