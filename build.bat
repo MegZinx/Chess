@@ -1,1 +1,2 @@
-g++ src/main.cpp src/Board.cpp -I external/SFML/include -I src/ -L external/SFML/lib -lsfml-graphics -lsfml-window -lsfml-system -o build/chess.exe
+@echo off
+g++ src/main.cpp src/Board.cpp -I external/SFML/include -I src/ -L external/SFML/lib -lsfml-graphics -lsfml-window -lsfml-system -o build/chess.exe && build\chess.exe

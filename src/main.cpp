@@ -43,23 +43,54 @@ void drawBoard(sf::RenderWindow &window){
     
 }
 
-void drawPieces(sf::RenderWindow &window, Board &b){
+void drawPawn(sf::RenderWindow &window, float x, float y, Piece::Color color){
+    
+    //Shape Initialization
+    sf::CircleShape triangle(25.f, 3);
+    sf::CircleShape circle(12.5);
 
-    //Initial Square properties
-    sf::RectangleShape square;
-    square.setSize({50,50});
-    square.setOutlineThickness(2.f);
-    square.setOutlineColor(sf::Color::Black);
+    //Shape Outline
+    circle.setOutlineColor(sf::Color::Black);
+    circle.setOutlineThickness(1.f);
+
+    triangle.setOutlineColor(sf::Color::Black);
+    triangle.setOutlineThickness(1.f);
+
+    //Shape Position
+    triangle.setPosition({x, y + 25});
+    circle.setPosition({x + 12, y + 5});
+
+    //Shape Color
+    if (color == Piece::Color::BLACK)
+    {
+        triangle.setFillColor(sf::Color::Black);
+        circle.setFillColor(sf::Color::Black);
+
+    } else if (color == Piece::Color::WHITE)
+    {
+        triangle.setFillColor(sf::Color(255, 255, 255));
+        circle.setFillColor(sf::Color(255, 255, 255));
+    }
+
+    //Shape Draw
+    window.draw(triangle);
+    window.draw(circle);
+}
+
+void drawPieces(sf::RenderWindow &window, Board &b){
     
     for (int row = 0; row < 8; row++)
     {
         for (int col = 0; col < 8; col++)
         {
+            float centerX = (float(col) * 100) + 25;
+            float centerY = (float(row) * 100) + 25;
+            Piece::Color color = b.at(row, col).color;
+
             if (b.at(row, col).type == Piece::Type::PAWN)
             {
-                square.setPosition({(float(col) * 100) + 25, (float(row) * 100) + 25});
-                square.setFillColor(sf::Color::Green);
-                window.draw(square);
+                drawPawn(window, centerX, centerY, color);
+
             }
             
         }
