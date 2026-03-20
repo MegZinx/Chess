@@ -50,10 +50,7 @@ void drawPawn(sf::RenderWindow &window, float x, float y, Piece::Color color){
     sf::CircleShape circle(12.5);
 
     //Shape Outline
-    circle.setOutlineColor(sf::Color::Black);
     circle.setOutlineThickness(1.f);
-
-    triangle.setOutlineColor(sf::Color::Black);
     triangle.setOutlineThickness(1.f);
 
     //Shape Position
@@ -66,15 +63,112 @@ void drawPawn(sf::RenderWindow &window, float x, float y, Piece::Color color){
         triangle.setFillColor(sf::Color::Black);
         circle.setFillColor(sf::Color::Black);
 
+        circle.setOutlineColor(sf::Color(255, 255, 255));
+        triangle.setOutlineColor(sf::Color(255, 255, 255));
+
     } else if (color == Piece::Color::WHITE)
     {
         triangle.setFillColor(sf::Color(255, 255, 255));
         circle.setFillColor(sf::Color(255, 255, 255));
+
+        circle.setOutlineColor(sf::Color::Black);
+        triangle.setOutlineColor(sf::Color::Black);
     }
 
     //Shape Draw
     window.draw(triangle);
     window.draw(circle);
+}
+
+void drawRook(sf::RenderWindow &window, float x, float y, Piece::Color color){
+    //Shape Initialization
+    sf::RectangleShape R1({25, 50});
+    sf::RectangleShape R2({20, 30});
+    sf::RectangleShape R3({20, 30});
+
+    //Shape Outline
+    R1.setOutlineThickness(1.f);
+    R2.setOutlineThickness(1.f);
+    R3.setOutlineThickness(1.f);
+    
+    //Shape Position
+    R1.setPosition({x + 15, y + 10});
+    R2.setPosition({x - 5, y});
+    R3.setPosition({x + 40, y});
+
+    //Shape Color
+    if (color == Piece::Color::BLACK)
+    {
+        R1.setFillColor(sf::Color::Black);
+        R2.setFillColor(sf::Color::Black);
+        R3.setFillColor(sf::Color::Black);
+
+        R1.setOutlineColor(sf::Color(255, 255, 255));
+        R2.setOutlineColor(sf::Color(255, 255, 255));
+        R3.setOutlineColor(sf::Color(255, 255, 255));
+
+    } else if (color == Piece::Color::WHITE)
+    {
+        R1.setFillColor(sf::Color(255, 255, 255));
+        R2.setFillColor(sf::Color(255, 255, 255));
+        R3.setFillColor(sf::Color(255, 255, 255));
+
+        R1.setOutlineColor(sf::Color::Black);
+        R2.setOutlineColor(sf::Color::Black);
+        R3.setOutlineColor(sf::Color::Black);
+    }
+
+    //Shape Draw
+    window.draw(R1);
+    window.draw(R2);
+    window.draw(R3);
+}
+
+void drawKnight(sf::RenderWindow &window, float x, float y, Piece::Color color){
+    //Shape Initialization
+    sf::RectangleShape S1({25, 50});
+    sf::CircleShape S2(20, 3);
+    sf::CircleShape S3(15);
+
+    //Shape Outline
+    S1.setOutlineThickness(1.f);
+    S2.setOutlineThickness(1.f);
+    S3.setOutlineThickness(1.f);
+    
+    //Shape Rotation
+    S2.setRotation(sf::degrees(90));
+
+    //Shape Position
+    S1.setPosition({x - 5, y + 10});
+    S2.setPosition({x + 45, y + 5});
+    S3.setPosition({x + 35, y + 10});
+
+    //Shape Color
+    if (color == Piece::Color::BLACK)
+    {
+        S1.setFillColor(sf::Color::Black);
+        S2.setFillColor(sf::Color::Black);
+        S3.setFillColor(sf::Color::Black);
+
+        S1.setOutlineColor(sf::Color(255, 255, 255));
+        S2.setOutlineColor(sf::Color(255, 255, 255));
+        S3.setOutlineColor(sf::Color(255, 255, 255));
+
+    } else if (color == Piece::Color::WHITE)
+    {
+        S1.setFillColor(sf::Color(255, 255, 255));
+        S2.setFillColor(sf::Color(255, 255, 255));
+        S3.setFillColor(sf::Color(255, 255, 255));
+
+        S1.setOutlineColor(sf::Color::Black);
+        S2.setOutlineColor(sf::Color::Black);
+        S3.setOutlineColor(sf::Color::Black);
+    }
+
+    //Shape Draw
+    window.draw(S1);
+    window.draw(S2);
+    window.draw(S3);
 }
 
 void drawPieces(sf::RenderWindow &window, Board &b){
@@ -91,7 +185,16 @@ void drawPieces(sf::RenderWindow &window, Board &b){
             {
                 drawPawn(window, centerX, centerY, color);
 
+            } else if (b.at(row, col).type == Piece::Type::ROOK)
+            {
+                drawRook(window, centerX, centerY, color);
+
+            } else if (b.at(row, col).type == Piece::Type::KNIGHT)
+            {
+                drawKnight(window, centerX, centerY, color);
             }
+            
+            
             
         }
         
@@ -101,7 +204,10 @@ void drawPieces(sf::RenderWindow &window, Board &b){
 
 int main(){
 
-    sf::RenderWindow window(sf::VideoMode({800,800}), "Chess-Cpp");
+    sf::ContextSettings settings;
+    settings.antiAliasingLevel = 8;
+
+    sf::RenderWindow window(sf::VideoMode({800,800}), "Chess-Cpp", sf::Style::Default, sf::State::Windowed, settings);
     Board board;
     board.setup();
     while (window.isOpen())
