@@ -8,4 +8,5 @@ public:
     Board();
     void setup();
     Piece& at(int row, int col);
+    void drawBoard(sf::RenderWindow &window);
 };

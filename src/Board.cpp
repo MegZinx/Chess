@@ -1,3 +1,4 @@
+#include <SFML/Graphics.hpp>
 #include "Board.h"
 #include "Piece.h"
 
@@ -53,4 +54,47 @@ void Board::setup(){
         at(7, col).type = backRow[col];
         at(7, col).color = Piece::Color::WHITE;
     }
+}
+
+void Board::drawBoard(sf::RenderWindow &window){
+    window.clear(sf::Color::Black);
+
+    //Initial Square properties
+    sf::RectangleShape square;
+    square.setSize({100,100});
+    square.setOutlineThickness(2.f);
+    square.setOutlineColor(sf::Color::Black);
+
+    //Main Drawing loop
+    for (int i = 0; i < 8; i++)
+    {
+        for (int j = 0; j < 8; j++)
+        {
+            //Position logic
+            square.setPosition({float(j) * 100, float(i) * 100});
+
+            //Color Alternation
+            if (i % 2 == 0)
+            {
+                if (j % 2 == 0)
+                {
+                    square.setFillColor(sf::Color(101,67,33));
+                } else {
+                    square.setFillColor(sf::Color(237,232,208));
+                }
+            } else {
+                if (j % 2 == 0)
+                {
+                    square.setFillColor(sf::Color(237,232,208));
+                } else {
+                    square.setFillColor(sf::Color(101,67,33));
+                }
+            }
+            
+            //Board Drawing
+            window.draw(square);
+        }
+        
+    }
+    
 }
